@@ -31,7 +31,7 @@ END {
         }
     }
     print "Transaksi terakhir dengan profit percentage terbesar yaitu", transaction_id,
-        "dengan prosentase", max_profit"%";
+        "dengan prosentase", max_profit"%.";
 }
 ' Laporan-TokoShiSop.tsv >> $output_file;
 echo "" >> $output_file;
@@ -75,7 +75,7 @@ END {
     }
 
     print "Tipe segmen customer yang penjualannya paling sedikit adalah",
-        segment, "dengan", min_transaction, "transaksi";
+        segment, "dengan", min_transaction, "transaksi.";
 }
 ' Laporan-TokoShiSop.tsv >> $output_file;
 echo "" >> $output_file;
@@ -101,6 +101,6 @@ END {
     }
 
     print "Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling",
-        "sedikit adalah", region, "dengan total keuntungan", min_profit;
+        "sedikit adalah", region, "dengan total keuntungan", min_profit".";
 }
 ' Laporan-TokoShiSop.tsv >> $output_file;
