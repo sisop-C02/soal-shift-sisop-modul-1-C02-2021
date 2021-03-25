@@ -52,13 +52,13 @@ done < $input_file
 index_result=($(echo ${index_result[*]}| tr " " "\n" | sort -n))
 users=($(echo ${users[*]}| tr " " "\n" | sort -n))
 
-echo "Error,Count" >> $output_file_1
+echo "Error,Count" > $output_file_1
 for (( i = `expr ${#index_result[@]} - 1`; i >= 0; i--))
 do
     echo "${messages[${index_result[$i]}]},${index_result[$i]}" >> $output_file_1
 done
 
-echo "Username,INFO,ERROR" >> $output_file_2
+echo "Username,INFO,ERROR" > $output_file_2
 for user in ${users[@]}
 do
     echo "${user},${users_info[$user]},${users_error[$user]}" >> $output_file_2
