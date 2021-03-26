@@ -1,11 +1,17 @@
 #!/bin/bash
 
-# Directories
-log_directory="Foto.log"
-pic_directory="FotoKucing/"
-new_directory=$(date '+%d-%m-%Y')
+if [ $# -gt 0 ]
+then
+  log_directory="$1/Foto.log"
+  pic_directory="$1/"
+  mkdir $pic_directory
+else
+  log_directory="Foto.log"
+  pic_directory=""
+fi
 
-mkdir $pic_directory
+# Directories
+new_directory=$(date '+%d-%m-%Y')
 
 # URLs
 pic_url="https://loremflickr.com/320/240/kitten"
@@ -40,11 +46,4 @@ for i in $pic_directory*.jpeg; do
   new=$(printf $pic_directory"Koleksi_%02d" "$a_rep")
   mv -- "$i" "$new"
   let a_rep=a_rep+1
-done
-
-# Moving files
-mkdir "$new_directory"
-
-for i in $pic_directory*; do
-  mv -- "$i" "$new_directory"
 done
