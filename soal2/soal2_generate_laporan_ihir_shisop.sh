@@ -2,6 +2,7 @@
 
 output_file=hasil.txt
 
+# call awk commands to search the max profit precentage
 awk -F '[\t]' '
 BEGIN   {
     max_profit = 0;
@@ -34,7 +35,10 @@ END {
         "dengan prosentase", max_profit"%.";
 }
 ' Laporan-TokoShiSop.tsv >> $output_file;
+
 echo "" >> $output_file;
+
+# use the awk for search the users which are the customer from Albuquerque
 awk -F '[\t]' '
 BEGIN   {
     print "Daftar nama customer di Albuquerque pada tahun 2017 antara lain:";
@@ -52,7 +56,10 @@ END {
     }
 }
 ' Laporan-TokoShiSop.tsv >> $output_file;
+
 echo "" >> $output_file;
+
+# call awk to find the min transaction which is based on the segment
 awk -F '[\t]' '
 BEGIN   {
     min_transaction = 999999;
@@ -78,7 +85,10 @@ END {
         segment, "dengan", min_transaction, "transaksi.";
 }
 ' Laporan-TokoShiSop.tsv >> $output_file;
+
 echo "" >> $output_file;
+
+# call awk to find the min profit from whole regions
 awk -F '[\t]' '
 BEGIN   {
     min_profit = 999999.0;
