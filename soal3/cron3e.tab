@@ -1,0 +1,5 @@
+#zip
+0 7 * * 1-5 bash soal3d.sh
+
+#unzip and delete
+0 18 * * 1-5 unzip -P "date '+%m%d%Y'" Koleksi.zip && rm Koleksi.zip

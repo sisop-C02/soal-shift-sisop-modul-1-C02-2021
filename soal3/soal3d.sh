@@ -1,5 +1,5 @@
 #!/bin/bash
 
-password=$(date "+%d%m%Y")
+password=$(date "+%m%d%Y")
 zip -P $password -r Koleksi.zip */
 
