@@ -1,13 +1,13 @@
 #!/bin/bash
 
-i=$(date "+%-e")
+i=$(date "+%--j")
 i=$((i % 2))
 
 kucing_url="https://loremflickr.com/320/240/kitten"
 kelinci_url="https://loremflickr.com/320/240/bunny"
 
 kucing_folder="Kucing_"$(date "+%d-%m-%Y")
-kelinci_folder="Kucing_"$(date "+%d-%m-%Y")
+kelinci_folder="Kelinci_"$(date "+%d-%m-%Y")
 
 mkdir "$kucing_folder"
 mkdir "$kelinci_folder"
