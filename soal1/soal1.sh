@@ -1,19 +1,20 @@
 #!/bin/bash
 
-# Sangat bisa untuk disederhanakan lagi
-# versi 2
-
+# declare the map of message an user log
 declare -A messages
 declare -A users_info
 declare -A users_error
 
+# declare the array that used to sort the result
 index_result=()
 users=()
 
+# declare the io files
 input_file=syslog.log
 output_file_1=error_message.csv
 output_file_2=user_statistic.csv
 
+# the function for count the user's log data
 checkLinesForUser()
 {
     line=${1##*(}
@@ -28,6 +29,7 @@ checkLinesForUser()
     fi
 }
 
+# the function for count the number of error message 
 checkLinesForError()
 {
     if [[ "$1" = *ERROR* ]]
@@ -43,22 +45,26 @@ checkLinesForError()
     fi
 }
 
+# while loop through the file
 while read lines
 do
     checkLinesForUser "$lines"
     checkLinesForError "$lines"
 done < $input_file
 
+# sort the results
 index_result=($(echo ${index_result[*]}| tr " " "\n" | sort -n))
 users=($(echo ${users[*]}| tr " " "\n" | sort -n))
 
-echo "Error,Count" >> $output_file_1
+# print the result into output file
+echo "Error,Count" > $output_file_1
 for (( i = `expr ${#index_result[@]} - 1`; i >= 0; i--))
 do
     echo "${messages[${index_result[$i]}]},${index_result[$i]}" >> $output_file_1
 done
 
-echo "Username,INFO,ERROR" >> $output_file_2
+# print the result into output file
+echo "Username,INFO,ERROR" > $output_file_2
 for user in ${users[@]}
 do
     echo "${user},${users_info[$user]},${users_error[$user]}" >> $output_file_2
