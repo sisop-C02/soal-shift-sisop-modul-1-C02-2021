@@ -1,16 +1,24 @@
 #!/bin/bash
 
-# Directories and URLs
-log_directory="Foto.log"
-pic_directory="FotoKucing/"
-pic_url="https://loremflickr.com/320/240/kitten"
+if [ $# -gt 0 ]
+then
+  log_directory="$1/Foto.log"
+  pic_directory="$1/"
+  mkdir $pic_directory
+else
+  log_directory="Foto.log"
+  pic_directory=""
+fi
 
-mkdir 'FotoKucing'
+# Directories
+new_directory=$(date '+%d-%m-%Y')
+
+# URLs
+pic_url="https://loremflickr.com/320/240/kitten"
 
 # Picture count
 pic_count=1
-max_pic=23
-
+max_pic=2
 
 # Download pics and fill the log
 while [ $pic_count -le $max_pic ]
@@ -33,9 +41,9 @@ for file in $pic_directory*; do
 done
 
 # Rename files
-num=1
+a_rep=1
 for i in $pic_directory*.jpeg; do
-  new=$(printf $pic_directory"Koleksi_%02d" "$num")
-  mv -i -- "$i" "$new"
-  let num=num+1
+  new=$(printf $pic_directory"Koleksi_%02d" "$a_rep")
+  mv -- "$i" "$new"
+  let a_rep=a_rep+1
 done
