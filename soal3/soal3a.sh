@@ -18,7 +18,7 @@ pic_url="https://loremflickr.com/320/240/kitten"
 
 # Picture count
 pic_count=1
-max_pic=2
+max_pic=23
 
 # Download pics and fill the log
 while [ $pic_count -le $max_pic ]
