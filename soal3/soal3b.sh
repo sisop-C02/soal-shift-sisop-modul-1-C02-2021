@@ -1,9 +1,11 @@
 #!/bin/bash
 
 # Directories
-log_directory="/home/jaglfr/FotoKucing/Foto.log"
-pic_directory="/home/jaglfr/FotoKucing/"
-new_directory=~/soal3/$(date '+%Y-%m-%d')
+log_directory="Foto.log"
+pic_directory="FotoKucing/"
+new_directory=$(date '+%d-%m-%Y')
+
+mkdir $pic_directory
 
 # URLs
 pic_url="https://loremflickr.com/320/240/kitten"
@@ -36,7 +38,7 @@ done
 a_rep=1
 for i in $pic_directory*.jpeg; do
   new=$(printf $pic_directory"Koleksi_%02d" "$a_rep")
-  mv -i -- "$i" "$new"
+  mv -- "$i" "$new"
   let a_rep=a_rep+1
 done
 
@@ -44,5 +46,5 @@ done
 mkdir "$new_directory"
 
 for i in $pic_directory*; do
-  mv -i -- "$i" "$new_directory"
+  mv -- "$i" "$new_directory"
 done

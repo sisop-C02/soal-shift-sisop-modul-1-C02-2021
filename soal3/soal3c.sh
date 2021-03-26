@@ -15,10 +15,10 @@ mkdir "$kelinci_folder"
 if [ "$i" -eq "1" ]
 then
 	# kelinci
-	wget "$kelinci_url"
+	wget "$kelinci_url" -q
 	mv 'bunny' "$kelinci_folder"/	
 else
 	# kucing
-	wget "$kucing_url"
+	wget "$kucing_url" -q
 	mv 'kitten' "$kucing_folder"/
 fi

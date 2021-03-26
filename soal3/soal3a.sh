@@ -1,9 +1,11 @@
 #!/bin/bash
 
 # Directories and URLs
-log_directory="/home/jaglfr/FotoKucing/Foto.log"
-pic_directory="/home/jaglfr/FotoKucing/"
+log_directory="Foto.log"
+pic_directory="FotoKucing/"
 pic_url="https://loremflickr.com/320/240/kitten"
+
+mkdir 'FotoKucing'
 
 # Picture count
 pic_count=1
