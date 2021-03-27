@@ -10,9 +10,6 @@ else
   pic_directory=""
 fi
 
-# Directories
-new_directory=$(date '+%d-%m-%Y')
-
 # URLs
 pic_url="https://loremflickr.com/320/240/kitten"
 
