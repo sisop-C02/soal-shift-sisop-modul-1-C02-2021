@@ -89,3 +89,268 @@ do
 done
 
 ```
+
+
+## Soal 2
+### Penjelasan Soal.
+Steven dan Manis mendirikan sebuah startup bernama “TokoShiSop”. Sedangkan kamu dan Clemong adalah karyawan pertama dari TokoShiSop. Setelah tiga tahun bekerja, Clemong diangkat menjadi manajer penjualan TokoShiSop, sedangkan kamu menjadi kepala gudang yang mengatur keluar masuknya barang.
+
+Tiap tahunnya, TokoShiSop mengadakan Rapat Kerja yang membahas bagaimana hasil penjualan dan strategi kedepannya yang akan diterapkan. Kamu sudah sangat menyiapkan sangat matang untuk raker tahun ini. Tetapi tiba-tiba, Steven, Manis, dan Clemong meminta kamu untuk mencari beberapa kesimpulan dari data penjualan “Laporan-TokoShiSop.tsv”.
+
+- Steven ingin mengapresiasi kinerja karyawannya selama ini dengan mengetahui Row ID dan profit percentage terbesar (jika hasil profit percentage terbesar lebih dari 1, maka ambil Row ID yang paling besar). Karena kamu bingung, Clemong memberikan definisi dari profit percentage, yaitu:
+> Profit Percentage = (Profit / Cost Price) * 100
+
+Cost Price didapatkan dari pengurangan Sales dengan Profit. (Quantity diabaikan).
+
+- Clemong memiliki rencana promosi di Albuquerque menggunakan metode MLM. Oleh karena itu, Clemong membutuhkan daftar nama customer pada transaksi tahun 2017 di Albuquerque.
+- TokoShiSop berfokus tiga segment customer, antara lain: Home Office, Customer, dan Corporate. Clemong ingin meningkatkan penjualan pada segmen customer yang paling sedikit. Oleh karena itu, Clemong membutuhkan segment customer dan jumlah transaksinya yang paling sedikit.
+- TokoShiSop membagi wilayah bagian (region) penjualan menjadi empat bagian, antara lain: Central, East, South, dan West. Manis ingin mencari wilayah bagian (region) yang memiliki total keuntungan (profit) paling sedikit dan total keuntungan wilayah tersebut.
+
+Agar mudah dibaca oleh Manis, Clemong, dan Steven, (e) kamu diharapkan bisa membuat sebuah script yang akan menghasilkan file “hasil.txt” yang memiliki format sebagai berikut:
+```
+Transaksi terakhir dengan profit percentage terbesar yaitu *ID Transaksi* dengan persentase *Profit Percentage*%.
+
+Daftar nama customer di Albuquerque pada tahun 2017 antara lain:
+*Nama Customer1*
+*Nama Customer2* dst
+
+Tipe segmen customer yang penjualannya paling sedikit adalah *Tipe Segment* dengan *Total Transaksi* transaksi.
+
+Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah 
+*Nama Region* dengan total keuntungan *Total Keuntungan (Profit)*
+
+```
+
+
+```bash
+#!/bin/bash
+
+output_file=hasil.txt
+
+# call awk commands to search the max profit precentage
+awk -F '[\t]' '
+BEGIN   {
+    max_profit = 0;
+    max_id = 0;
+}
+{
+    if (n) {
+        profit=($21/($18-$21))*100;
+        if (profit > max_profit) {
+            max_profit=profit;
+        }
+        result[$1]=profit;
+        transaction_ids[$1]=$2;
+    }
+    ++n;
+}
+END {
+    for (i in result) {
+        if (result[i] == max_profit) {
+            if (i > max_id) {
+                max_id = i;
+                transaction_id=transaction_ids[i];
+            }
+        }
+    }
+    print "Transaksi terakhir dengan profit percentage terbesar yaitu", transaction_id,
+        "dengan prosentase", max_profit"%.";
+}
+' Laporan-TokoShiSop.tsv >> $output_file;
+
+echo "" >> $output_file;
+
+# use the awk for search the users which are the customer from Albuquerque
+awk -F '[\t]' '
+BEGIN   {
+    print "Daftar nama customer di Albuquerque pada tahun 2017 antara lain:";
+}
+/Albuquerque/ {
+    if (match($2, "2017")) {
+        result[$7]=1;
+    }
+}
+END {
+    for (i in result) {
+        print i;
+    }
+}
+' Laporan-TokoShiSop.tsv >> $output_file;
+
+echo "" >> $output_file;
+
+# call awk to find the min transaction which is based on the segment
+awk -F '[\t]' '
+BEGIN   {
+    min_transaction = 999999;
+}
+{
+    if (n) {
+        segment_transaction[$8] = segment_transaction[$8] + $19;
+    }
+    ++n;
+}
+END {
+    for (i in segment_transaction) {
+        if (segment_transaction[i] < min_transaction) {
+            segment = i;
+            min_transaction = segment_transaction[i];
+        }
+    }
+    print "Tipe segmen customer yang penjualannya paling sedikit adalah",
+        segment, "dengan", min_transaction, "transaksi.";
+}
+' Laporan-TokoShiSop.tsv >> $output_file;
+
+echo "" >> $output_file;
+
+# call awk to find the min profit from whole regions
+awk -F '[\t]' '
+BEGIN   {
+    min_profit = 999999.0;
+}
+{
+    if (n) {
+        region_profit[$13]=region_profit[$13]+$21;
+    }
+    ++n;
+}
+END {
+    for (i in region_profit) {
+        if (region_profit[i] < min_profit) {
+            region = i;
+            min_profit = region_profit[i];
+        }
+    }
+    print "Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling",
+        "sedikit adalah", region, "dengan total keuntungan", min_profit".";
+}
+' Laporan-TokoShiSop.tsv >> $output_file;
+```
+
+```
+Transaksi terakhir dengan profit percentage terbesar yaitu CA-2017-121559 dengan prosentase 100%
+
+Daftar nama customer di Albuquerque pada tahun 2017 antara lain:
+Benjamin Farhat
+David Wiener
+Michelle Lonsdale
+Susan Vittorini
+
+Tipe segmen customer yang penjualannya paling sedikit adalah Home Office dengan 6744 transaksi
+
+Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah Central dengan total keuntungan 39706.4
+```
+
+## Soal 3
+### Penjelasan Soal.
+Kuuhaku adalah orang yang sangat suka mengoleksi foto-foto digital, namun Kuuhaku juga merupakan seorang yang pemalas sehingga ia tidak ingin repot-repot mencari foto, selain itu ia juga seorang pemalu, sehingga ia tidak ingin ada orang yang melihat koleksinya tersebut, sayangnya ia memiliki teman bernama Steven yang memiliki rasa kepo yang luar biasa. Kuuhaku pun memiliki ide agar Steven tidak bisa melihat koleksinya, serta untuk mempermudah hidupnya, yaitu dengan meminta bantuan kalian. Idenya adalah :
+- Membuat script untuk mengunduh 23 gambar dari "https://loremflickr.com/320/240/kitten" serta menyimpan log-nya ke file "Foto.log". Karena gambar yang diunduh acak, ada kemungkinan gambar yang sama terunduh lebih dari sekali, oleh karena itu kalian harus menghapus gambar yang sama (tidak perlu mengunduh gambar lagi untuk menggantinya). Kemudian menyimpan gambar-gambar tersebut dengan nama "Koleksi_XX" dengan nomor yang berurutan tanpa ada nomor yang hilang (contoh : Koleksi_01, Koleksi_02, ...)
+```bash
+#!/bin/bash
+
+if [ $# -gt 0 ]
+then
+  log_directory="$1/Foto.log"
+  pic_directory="$1/"
+  mkdir $pic_directory
+else
+  log_directory="Foto.log"
+  pic_directory=""
+fi
+
+# Directories
+new_directory=$(date '+%d-%m-%Y')
+
+# URLs
+pic_url="https://loremflickr.com/320/240/kitten"
+
+# Picture count
+pic_count=1
+max_pic=23
+
+# Download pics and fill the log
+while [ $pic_count -le $max_pic ]
+do
+    wget -a $log_directory -O $pic_directory$pic_count".jpeg" $pic_url
+    let pic_count+=1
+done
+
+# Detect and delete duplicates
+declare -A arr
+shopt -s globstar
+
+for file in $pic_directory*; do
+  [[ -f "$file" ]] || continue
+   
+  read cksm _ < <(md5sum "$file")
+  if ((arr[$cksm]++)); then 
+    rm $file
+  fi
+done
+
+# Rename files
+a_rep=1
+for i in $pic_directory*.jpeg; do
+  new=$(printf $pic_directory"Koleksi_%02d" "$a_rep")
+  mv -- "$i" "$new"
+  let a_rep=a_rep+1
+done
+```
+
+- Karena Kuuhaku malas untuk menjalankan script tersebut secara manual, ia juga meminta kalian untuk menjalankan script tersebut sehari sekali pada jam 8 malam untuk tanggal-tanggal tertentu setiap bulan, yaitu dari tanggal 1 tujuh hari sekali (1,8,...), serta dari tanggal 2 empat hari sekali(2,6,...). Supaya lebih rapi, gambar yang telah diunduh beserta log-nya, dipindahkan ke folder dengan nama tanggal unduhnya dengan format "DD-MM-YYYY" (contoh : "13-03-2023").
+```
+0 20 1-31/7 * * bash soal3b.sh
+0 20 2-18/4 * * bash soal3b.sh
+0 20 26-31/4 * * bash soal3b.sh
+```
+```bash
+#!/bin/bash
+bash soal3a.sh $(date '+%d-%m-%Y')
+```
+
+- Agar kuuhaku tidak bosan dengan gambar anak kucing, ia juga memintamu untuk mengunduh gambar kelinci dari "https://loremflickr.com/320/240/bunny". Kuuhaku memintamu mengunduh gambar kucing dan kelinci secara bergantian (yang pertama bebas. contoh : tanggal 30 kucing > tanggal 31 kelinci > tanggal 1 kucing > ... ). Untuk membedakan folder yang berisi gambar kucing dan gambar kelinci, nama folder diberi awalan "Kucing_" atau "Kelinci_" (contoh : "Kucing_13-03-2023").  
+Setelah semua informasi yang diperlukan telah disiapkan, kini saatnya Ryujin menuliskan semua informasi tersebut ke dalam laporan dengan format file csv.
+```bash
+#!/bin/bash
+
+i=$(date "+%--j")
+i=$((i % 2))
+
+kucing_url="https://loremflickr.com/320/240/kitten"
+kelinci_url="https://loremflickr.com/320/240/bunny"
+
+kucing_folder="Kucing_"$(date "+%d-%m-%Y")
+kelinci_folder="Kelinci_"$(date "+%d-%m-%Y")
+
+mkdir "$kucing_folder"
+mkdir "$kelinci_folder"
+
+if [ "$i" -eq "1" ]
+then
+	# kelinci
+	wget "$kelinci_url" -q
+	mv 'bunny' "$kelinci_folder"/	
+else
+	# kucing
+	wget "$kucing_url" -q
+	mv 'kitten' "$kucing_folder"/
+fi
+```
+
+- Untuk mengamankan koleksi Foto dari Steven, Kuuhaku memintamu untuk membuat script yang akan memindahkan seluruh folder ke zip yang diberi nama “Koleksi.zip” dan mengunci zip tersebut dengan password berupa tanggal saat ini dengan format "MMDDYYYY" (contoh : “03032003”).
+```bash
+#!/bin/bash
+
+password=$(date "+%m%d%Y")
+zip -P $password -r Koleksi.zip */
+```
+
+- Karena kuuhaku hanya bertemu Steven pada saat kuliah saja, yaitu setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, ia memintamu untuk membuat koleksinya ter-zip saat kuliah saja, selain dari waktu yang disebutkan, ia ingin koleksinya ter-unzip dan tidak ada file zip sama sekali.
+```
+#zip
+0 7 * * 1-5 bash soal3d.sh
+
+#unzip and delete
+0 18 * * 1-5 unzip -P "date '+%m%d%Y'" Koleksi.zip && rm Koleksi.zip
+```
