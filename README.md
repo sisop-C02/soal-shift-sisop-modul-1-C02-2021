@@ -29,17 +29,17 @@ ryujin.1203,1,3
 - (a) Untuk jawaban pada poin ini secara keseluruhan implementasinya digunakan untuk poin selanjutnya, jadi penjelasannya akan diterangkan bersamaan dengan penjelasan poin lainnya.
 - (b) Penjelasan jawaban poin ini adalah sebagai berikut:
 > Mendeklarasikan sebuah variable bertipe array map untuk menyimpan pesan error, kemudian juga array untuk menyimpan index pesan error tadi, dan tentunya nama dari input dan output filenya.
-> ```bash
-> declare -A messages
-> ...
-> index_result=()
-> ...
-> input_file=syslog.log
-> output_file_1=error_message.csv
-> ```
-> Untuk menghitung jumlah pesan error di setiap jenisnya, maka dideklarasikan juga sebuah fungsi bernama `checkLinesForError`.
-> ```bash
-> checkLinesForError()
+```bash
+declare -A messages
+...
+index_result=()
+...
+input_file=syslog.log
+output_file_1=error_message.csv
+```
+> Untuk menghitung jumlah pesan error di setiap jenisnya, maka dideklarasikan juga sebuah fungsi bernama `checkLinesForError`. Didalamnya
+```bash
+checkLinesForError()
 {
     if [[ "$1" = *ERROR* ]]
     then
@@ -53,7 +53,7 @@ ryujin.1203,1,3
         fi
     fi
 }
-> ```
+```
 
 ```bash
 #!/bin/bash
