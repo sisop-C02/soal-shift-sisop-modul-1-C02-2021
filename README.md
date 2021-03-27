@@ -323,19 +323,19 @@ kelinci_url="https://loremflickr.com/320/240/bunny"
 kucing_folder="Kucing_"$(date "+%d-%m-%Y")
 kelinci_folder="Kelinci_"$(date "+%d-%m-%Y")
 
-mkdir "$kucing_folder"
-mkdir "$kelinci_folder"
-
 if [ "$i" -eq "1" ]
 then
 	# kelinci
+	mkdir "$kelinci_folder"
 	wget "$kelinci_url" -q
 	mv 'bunny' "$kelinci_folder"/	
 else
 	# kucing
+	mkdir "$kucing_folder"
 	wget "$kucing_url" -q
 	mv 'kitten' "$kucing_folder"/
 fi
+
 ```
 
 - Untuk mengamankan koleksi Foto dari Steven, Kuuhaku memintamu untuk membuat script yang akan memindahkan seluruh folder ke zip yang diberi nama “Koleksi.zip” dan mengunci zip tersebut dengan password berupa tanggal saat ini dengan format "MMDDYYYY" (contoh : “03032003”).
@@ -344,6 +344,8 @@ fi
 
 password=$(date "+%m%d%Y")
 zip -P $password -r Koleksi.zip */
+
+rm -R -- */
 ```
 
 - Karena kuuhaku hanya bertemu Steven pada saat kuliah saja, yaitu setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, ia memintamu untuk membuat koleksinya ter-zip saat kuliah saja, selain dari waktu yang disebutkan, ia ingin koleksinya ter-unzip dan tidak ada file zip sama sekali.
