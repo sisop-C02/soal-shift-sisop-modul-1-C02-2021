@@ -17,7 +17,7 @@ Permission denied,5
 File not found,3
 Failed to connect to DB,2
 ```
-e. Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.  
+- (e) Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.  
 Contoh:
 ```
 Username,INFO,ERROR
@@ -28,16 +28,13 @@ ryujin.1203,1,3
 ### Solusi dan Penjelasannya.
 - (a) Untuk jawaban pada poin ini secara keseluruhan implementasinya digunakan untuk poin selanjutnya, jadi penjelasannya akan diterangkan bersamaan dengan penjelasan poin lainnya.
 - (b) Penjelasan jawaban poin ini adalah sebagai berikut:
-> Mendeklarasikan sebuah variable bertipe array map untuk menyimpan pesan error, kemudian juga array untuk menyimpan index pesan error tadi, dan tentunya nama dari input dan output filenya.
+> Mendeklarasikan sebuah variable bertipe array map untuk menyimpan pesan error, kemudian juga array untuk menyimpan index pesan error tadi.
 ```bash
 declare -A messages
 ...
 index_result=()
-...
-input_file=syslog.log
-output_file_1=error_message.csv
 ```
-> Untuk menghitung jumlah pesan error di setiap jenisnya, maka dideklarasikan juga sebuah fungsi bernama `checkLinesForError`. Didalamnya
+> Untuk menghitung jumlah pesan error di setiap jenisnya, maka dideklarasikan juga sebuah fungsi bernama `checkLinesForError`. Didalamnya terdapat kondisi `[[ "$1" = *ERROR* ]]` untuk memastikan bahwa pesan yang akan disimpan adalah pesan ERROR. Jika memang benar pesan ERROR maka akan dilakukan pemotongan baris untuk mendapatkan pesannya, yaitu dengan `line=${1##*ERROR }` dan `message=${line% (*}`. Untuk setiap pesan yang didapat akan dilakukan pemeriksaan apakah pesan tersebut sudah ada dalam array map `[[ ! "${messages[@]}" = *${message}* ]]`. Jika tidak ditemukan, maka akan dilakukan penghitungan jumlah pesan tersebut pada file syslog.log `index=$(grep -wc "$message" $input_file)` dan penyimpanan pesan ke dalam array `messages+=([$index]="$message")` dan `index_result+=($index)`.
 ```bash
 checkLinesForError()
 {
@@ -54,7 +51,96 @@ checkLinesForError()
     fi
 }
 ```
-
+> Setelah deklarasi variable dan fungsi yang diperlukan selesai, maka fungsi `checkLinesForError` dapat dipanggil ketika pembacaan file syslog.log. Karena fungsi tersebut membutuhkan parameter berupa baris data dari file syslog.log, maka setiap pembacaan baris data akan di-*passing* ke fungsi tadi.
+```bash
+while read lines
+do
+    ...
+    checkLinesForError "$lines"
+done < $input_file
+```
+> Jika semua pesan sudah disimpan kedalam array, dilakukan pencetakan hasil.
+```bash
+for (( i = `expr ${#index_result[@]} - 1`; i >= 0; i--))
+do
+    echo "${messages[${index_result[$i]}]},${index_result[$i]}" ...
+done
+```
+- (c) Berikut penjelasan poin ini:
+> Mendeklarasikan sebuah variable bertipe array map untuk menyimpan jumlah pesan error beserta info per pengguna, kemudian juga array untuk menyimpan index dari jumlah pesan tersebut berdasarkan namanya.
+```bash
+declare -A users_info
+declare -A users_error
+...
+users=()
+```
+> Untuk menghitung jumlah pesan error dan info di setiap penggunanya, maka dideklarasikan juga sebuah fungsi bernama `checkLinesForUser`. Sebelumnya dilakukan pemotongan baris untuk mendapatkan nama penggunanya, yaitu dengan `line=${1##*(}` dan `user=${line%)*}`. Untuk setiap nama pengguna akan dilakukan pemeriksaan apakah nama tersebut sudah ada dalam array map `[[ ! "${users[@]}" = *$user* ]]`. Jika tidak ditemukan, maka  nama penggunanya akan disimpan ke dalam array `users+=("$user")` kemudian dilakukan penghitungan jumlah pesan error `user_error=$(grep -i "($user)" $input_file | grep -wc "ERROR")` dan info `user_info=$(grep -i "($user)" $input_file | grep -wc "INFO")` pada file syslog.log. Lalu, hasil perhitungan jumlah tersebut akan disimpan kedalam array pesan `users_info+=(["$user"]=$user_info)` dan `users_error+=(["$user"]=$user_error)`.
+```bash
+checkLinesForUser()
+{
+    line=${1##*(}
+    user=${line%)*}
+    if [[ ! "${users[@]}" = *$user* ]]
+    then
+        users+=("$user")
+        user_info=$(grep -i "($user)" $input_file | grep -wc "INFO")
+        user_error=$(grep -i "($user)" $input_file | grep -wc "ERROR")
+        users_info+=(["$user"]=$user_info)
+        users_error+=(["$user"]=$user_error)
+    fi
+}
+```
+> Setelah deklarasi variable dan fungsi yang diperlukan selesai, maka fungsi `checkLinesForUser` dapat dipanggil ketika pembacaan file syslog.log. Karena fungsi tersebut membutuhkan parameter berupa baris data dari file syslog.log, maka setiap pembacaan baris data akan di-*passing* ke fungsi tadi.
+```bash
+while read lines
+do
+    checkLinesForUser "$lines"
+    ...
+done < $input_file
+```
+> Jika semua pesan sudah disimpan kedalam array, dilakukan pencetakan hasil.
+```bash
+for user in ${users[@]}
+do
+    echo "${user},${users_info[$user]},${users_error[$user]}" ...
+done
+```
+- (d) Poin ini merupakan kelanjutan dari poin b, berikut lanjutannya:
+> Mendeklarasikan input  dan output filenya.
+```bash
+input_file=syslog.log
+output_file_1=error_message.csv
+```
+> Melakukan pengurutan pada data yang diperoleh dari poin b. Pengurutan ini dilakukan pada array index pesan error tadi. Jadi dalam array map tadi yang menjadi key adalah jumlah pesannya kemudian pesannya sendiri menjadi value dari map tersebut.
+```bash
+index_result=($(echo ${index_result[*]}| tr " " "\n" | sort -n))
+```
+> Setelah dilakukan pengurutan, maka hasil akan dicetak ke dalam file error_message.csv
+```bash
+echo "Error,Count" > $output_file_1
+for (( i = `expr ${#index_result[@]} - 1`; i >= 0; i--))
+do
+    echo "${messages[${index_result[$i]}]},${index_result[$i]}" >> $output_file_1
+done
+```
+- (e) Poin ini merupakan kelanjutan dari poin c, berikut lanjutannya:
+> Mendeklarasikan output filenya.
+```bash
+output_file_2=user_statistic.csv
+```
+> Melakukan pengurutan pada data yang diperoleh dari poin c. Pengurutan ini dilakukan pada array index pesan error dan info tadi. Jadi dalam array map tadi yang menjadi key adalah nama penggunanya kemudian jumlah pesannya sendiri menjadi value dari dua map tersebut.
+```bash
+users=($(echo ${users[*]}| tr " " "\n" | sort -n))
+```
+> Setelah dilakukan pengurutan, maka hasil akan dicetak ke dalam file user_statistic.csv
+```bash
+echo "Username,INFO,ERROR" > $output_file_2
+for user in ${users[@]}
+do
+    echo "${user},${users_info[$user]},${users_error[$user]}" >> $output_file_2
+done
+```
+Berikut kode prgram lengkapnya:
 ```bash
 #!/bin/bash
 
@@ -120,7 +206,6 @@ do
 done
 
 ```
-
 
 ## Soal 2
 ### Penjelasan Soal.
