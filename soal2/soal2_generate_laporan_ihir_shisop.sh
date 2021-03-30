@@ -16,7 +16,6 @@ BEGIN   {
             max_profit=profit;
         }
         result[$1]=profit;
-        transaction_ids[$1]=$2;
     }
 
     ++n;
@@ -27,11 +26,10 @@ END {
         if (result[i] == max_profit) {
             if (i > max_id) {
                 max_id = i;
-                transaction_id=transaction_ids[i];
             }
         }
     }
-    print "Transaksi terakhir dengan profit percentage terbesar yaitu", transaction_id,
+    print "Transaksi terakhir dengan profit percentage terbesar yaitu", max_id,
         "dengan prosentase", max_profit"%.";
 }
 ' Laporan-TokoShiSop.tsv >> $output_file;
@@ -67,7 +65,7 @@ BEGIN   {
 
 {
     if (n) {
-        segment_transaction[$8] = segment_transaction[$8] + $19;
+        segment_transaction[$8] = segment_transaction[$8] + 1;
     }
 
     ++n;
