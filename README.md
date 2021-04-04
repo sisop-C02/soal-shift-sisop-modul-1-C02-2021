@@ -723,8 +723,11 @@ rm -R -- */
 # rm -R -- Kucing_* Kelinci_*
 ```
 > Setelah dijalankan, file soal3d.sh memindahkan file dari folder pada soal 3c menjadi zip dan memberi password sesuai pada soal.  Berikut adalah screenshot isi direktori setelah dijalankan.
+>
 ![image](https://user-images.githubusercontent.com/49693862/113508013-d90bad00-9577-11eb-8af7-c75904fde221.png)
+
 > dan berikut adalah isi zip nya.
+
 ![image](https://user-images.githubusercontent.com/49693862/113508024-e9bc2300-9577-11eb-8b53-d12b86c9c40e.png)
 
 - (e) Solusi untuk poin ini adalah sebagai berikut:
