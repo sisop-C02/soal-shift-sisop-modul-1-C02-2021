@@ -149,6 +149,9 @@ do
     echo "${user},${users_info[$user]},${users_error[$user]}" >> $output_file_2
 done
 ```
+> Berikut adalah screenshot isi user_statistic.csv setelah script dijalankan
+![image](https://user-images.githubusercontent.com/49693862/113507019-3997eb80-9572-11eb-8b13-ccc52651d30f.png)
+
 Berikut kode prgram lengkapnya:
 ```bash
 #!/bin/bash
