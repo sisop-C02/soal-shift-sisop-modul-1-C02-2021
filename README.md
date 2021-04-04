@@ -623,7 +623,7 @@ fi
 0 20 26-31/4 * * bash soal3b.sh
 ```
 - (c) Solusi untuk poin ini adalah sebagai berikut:
-> Menambahkan variabel date handling untuk menentukan kapan akan diunduh gambar kucing, kapan akan diunduh gambar kelinci.
+> Menambahkan variabel date handling untuk menentukan kapan akan diunduh gambar kucing, kapan akan diunduh gambar kelinci. Untuk menentukan hal ini, digunakan hari ke berapa dalam tahun bukan dalam bulan, karena setiap berganti hari maka akan berganti objek yang diunduh.
 ```bash
 # Date handling
 i=$(date "+%--j")
