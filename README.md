@@ -627,6 +627,10 @@ else
   pic_directory=""
 fi
 ```
+
+> Berikut adalah isi folder yang telah dibuat sesuai dengan tanggal dijalankan, screenshot dibawah dijalnkan pada 4 April 2021. Terdapat file gambar dan log sesuai dengan permintaan pada soal.
+![image](https://user-images.githubusercontent.com/49693862/113507799-d52b5b00-9576-11eb-8a47-34edfccbf6e8.png)
+
 > Untuk crontab 3b, diminta untuk menjalankan script soal 3b sehari sekali dengan aturan mulai dari tanggal 1-31 setiap 7 hari sekali dan dari tanggal 2-31 setiap 4 hari sekali. Perintah cron dipisah menjadi 3 perintah karena tanggal 1/7 dan 2/4 akan bertemu di tanggal 22. Sementara soal hanya meminta script untuk dijalankan sehari sekali.
 ```
 0 20 1-31/7 * * bash soal3b.sh
