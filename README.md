@@ -212,6 +212,15 @@ do
 done
 
 ```
+### Dokumentasi dan Kendala
+Screenshot hasil:
+- error_message.csv
+<img src="/soal1/error_message.png" width="500">
+- user_statistic.csv
+<img src="/soal1/user_statistic.png" width="200">
+
+Kendala ketika pengerjaan:
+Tidak mendokumentasikan kendala karena belum mengerti jika digunakan dalam lapres. Dari yang terjadi, selama mengerjakan soal ini awalnya menemukan kesulitan untuk bagaimana mendapatkan pesan yang sesuai dengan ketentuan (implementasi regex). Hingga akhirnya menemukan cara mendapatkan pesan atau string yang dinginkan dengan cara memotong kata yang dibutuhkan dari string yang ada.
 ---
 
 ## Soal 2
@@ -518,20 +527,13 @@ END {
 }
 ' Laporan-TokoShiSop.tsv >> $output_file;
 ```
-Berikut adalah hasil dari eksekusi kode program yang disimpan ke dalam hasil.txt:
-```
-Transaksi terakhir dengan profit percentage terbesar yaitu 9952 dengan prosentase 100%.
+### Dokumentasi dan Kendala
+Screenshot hasil:
+- hasil.txt
+<img src="/soal2/hasil.png" width="700">
 
-Daftar nama customer di Albuquerque pada tahun 2017 antara lain:
-Benjamin Farhat
-David Wiener
-Michelle Lonsdale
-Susan Vittorini
-
-Tipe segmen customer yang penjualannya paling sedikit adalah Home Office dengan 1783 transaksi.
-
-Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah Central dengan total keuntungan 39706.4.
-```
+Kendala ketika pengerjaan:
+Tidak mendokumentasikan kendala karena belum mengerti jika digunakan dalam lapres. Dari yang terjadi, selama mengerjakan soal ini sudah dari awal kepikiran menggunakan perintah `awk` maka tinggal menulis saja scipt yang sesuai dengan ketentuan soal. Namun setelah jadi ditemukan kesalahan pemilihan opsi separator perintah `awk` yang seharusnya tab namun menggunakan default spasi. Untuk mendapatkan hasil yang sesuai makan tinggal mengganti opsi separator yang digunakan menjadi tab dengan ditambah opsi `-F '[\t]'` pada perintah `awk`.
 ---
 
 ## Soal 3
