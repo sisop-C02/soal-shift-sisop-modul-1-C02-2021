@@ -741,4 +741,8 @@ rm -R -- */
 #unzip and delete
 0 18 * * 1-5 unzip -P $(date '+%m%d%Y') Koleksi.zip && rm Koleksi.zip
 ```
+Kendala ketika pengerjaan:    
+Pada soal 3a, ada kendala saat mendeteksi file yang duplikat karena belum tahu bagaimana caranya. Akhirnya setelah mencari lagi menemukan cara dengan checksum filenya.
+Pada soal 3c, sebelumnya menggunakan hari ke berapa pada satu bulan, bukan pada tahun disebabkan karena kurang cermat memahami soal. Akhirnya, diganti dengan hari ke berapa dalam satu tahun.
+
 ---
