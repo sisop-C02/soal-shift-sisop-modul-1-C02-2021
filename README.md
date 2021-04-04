@@ -219,8 +219,9 @@ Screenshot hasil:
 - user_statistic.csv
 <img src="/soal1/user_statistic.png" width="600">
 
-Kendala ketika pengerjaan:
-Tidak mendokumentasikan kendala karena belum mengerti jika digunakan dalam lapres. Dari yang terjadi, selama mengerjakan soal ini awalnya menemukan kesulitan untuk bagaimana mendapatkan pesan yang sesuai dengan ketentuan (implementasi regex). Hingga akhirnya menemukan cara mendapatkan pesan atau string yang dinginkan dengan cara memotong kata yang dibutuhkan dari string yang ada.
+Kendala ketika pengerjaan:    
+Tidak mendokumentasikan kendala karena belum mengerti jika digunakan dalam lapres. Dari yang terjadi, selama mengerjakan soal ini awalnya menemukan kesulitan untuk bagaimana mendapatkan pesan yang sesuai dengan ketentuan (implementasi regex). Hingga akhirnya menemukan cara mendapatkan pesan atau string yang dinginkan dengan cara memotong kata yang dibutuhkan dari string yang ada.    
+
 ---
 
 ## Soal 2
@@ -532,8 +533,9 @@ Screenshot hasil:
 - hasil.txt
 <img src="/soal2/hasil.png" width="1000">
 
-Kendala ketika pengerjaan:
-Tidak mendokumentasikan kendala karena belum mengerti jika digunakan dalam lapres. Dari yang terjadi, selama mengerjakan soal ini sudah dari awal kepikiran menggunakan perintah `awk` maka tinggal menulis saja scipt yang sesuai dengan ketentuan soal. Namun setelah jadi ditemukan kesalahan pemilihan opsi separator perintah `awk` yang seharusnya tab namun menggunakan default spasi. Untuk mendapatkan hasil yang sesuai makan tinggal mengganti opsi separator yang digunakan menjadi tab dengan ditambah opsi `-F '[\t]'` pada perintah `awk`.
+Kendala ketika pengerjaan:    
+Tidak mendokumentasikan kendala karena belum mengerti jika digunakan dalam lapres. Dari yang terjadi, selama mengerjakan soal ini sudah dari awal kepikiran menggunakan perintah `awk` maka tinggal menulis saja scipt yang sesuai dengan ketentuan soal. Namun setelah jadi ditemukan kesalahan pemilihan opsi separator perintah `awk` yang seharusnya tab namun menggunakan default spasi. Untuk mendapatkan hasil yang sesuai makan tinggal mengganti opsi separator yang digunakan menjadi tab dengan ditambah opsi `-F '[\t]'` pada perintah `awk`.    
+
 ---
 
 ## Soal 3
