@@ -129,9 +129,6 @@ do
     echo "${messages[${index_result[$i]}]},${index_result[$i]}" >> $output_file_1
 done
 ```
-> Berikut adalah screenshot isi error_message.csv setelah script dijalankan
-> ![image](https://user-images.githubusercontent.com/49693862/113506995-10775b00-9572-11eb-9e3f-5ccdd1da2959.png)
-
 - (e) Poin ini merupakan kelanjutan dari poin c, berikut lanjutannya:
 > Mendeklarasikan output filenya.
 ```bash
@@ -149,9 +146,6 @@ do
     echo "${user},${users_info[$user]},${users_error[$user]}" >> $output_file_2
 done
 ```
-> Berikut adalah screenshot isi user_statistic.csv setelah script dijalankan
-![image](https://user-images.githubusercontent.com/49693862/113507019-3997eb80-9572-11eb-8b13-ccc52651d30f.png)
-
 Berikut kode prgram lengkapnya:
 ```bash
 #!/bin/bash
