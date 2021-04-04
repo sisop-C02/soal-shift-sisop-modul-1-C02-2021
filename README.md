@@ -129,6 +129,9 @@ do
     echo "${messages[${index_result[$i]}]},${index_result[$i]}" >> $output_file_1
 done
 ```
+> Berikut adalah screenshot isi error_message.csv setelah script dijalankan
+> ![image](https://user-images.githubusercontent.com/49693862/113506995-10775b00-9572-11eb-9e3f-5ccdd1da2959.png)
+
 - (e) Poin ini merupakan kelanjutan dari poin c, berikut lanjutannya:
 > Mendeklarasikan output filenya.
 ```bash
