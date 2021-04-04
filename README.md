@@ -704,6 +704,9 @@ for i in $pic_directory*.jpeg; do
   let a_rep=a_rep+1
 done
 ```
+> Berikut adalah screenshot setelah script dijalankan pada 4 Apr 2021. Pada hari itu, di download foto kucing dan dimasukkan pada folder sesuai dengan ketentuan nama di soal. Lebih lengkapnya dapat dilihat pada screenshot dibawah.
+![image](https://user-images.githubusercontent.com/49693862/113507925-7a463380-9577-11eb-9641-2599aaa1a9b8.png)
+
 - (d) Solusi untuk poin ini adalah sebagai berikut:
 > Menjalankan perintah untuk `zip` semua folder yang ada di dalam directory, atau semua folder berawalan `Kucing_` dan `Kelinci_` dengan password. Password merupakan tanggal hari ini dengan format MMDDYYY `password=$(date "+%m%d%Y")`. Setelah folder di-zip, hapus folder-folder tersebut menggunakan perintah `rm -R`.
 ```bash
@@ -719,6 +722,11 @@ rm -R -- */
 # zip -P $password -r Koleksi.zip Kucing_* Kelinci_*
 # rm -R -- Kucing_* Kelinci_*
 ```
+> Setelah dijalankan, file soal3d.sh memindahkan file dari folder pada soal 3c menjadi zip dan memberi password sesuai pada soal.  Berikut adalah screenshot isi direktori setelah dijalankan.
+![image](https://user-images.githubusercontent.com/49693862/113508013-d90bad00-9577-11eb-8af7-c75904fde221.png)
+> dan berikut adalah isi zip nya.
+![image](https://user-images.githubusercontent.com/49693862/113508024-e9bc2300-9577-11eb-8b53-d12b86c9c40e.png)
+
 - (e) Solusi untuk poin ini adalah sebagai berikut:
 > Untuk melakukan zip, jalankan script 3d yang sudah memiliki perintah tersebut. Command zip akan dijalankan pukul 07:00 setiap hari Senin - Jumat.
 ```
