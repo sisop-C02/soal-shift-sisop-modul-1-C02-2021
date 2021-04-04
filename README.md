@@ -603,6 +603,13 @@ for i in $pic_directory*.jpeg; do
   let a_rep=a_rep+1
 done
 ```
+> Setelah menjalankan script, berikut salah satu contoh hasil dari script 3a. Script berhasil mengunduh gambar.
+![image](https://user-images.githubusercontent.com/49693862/113507672-30a91900-9576-11eb-895d-96b45cfa2d4f.png)
+
+> Kemudian, di file log nya sendiri, berikut potongan screenshot dari log yang didapat
+![image](https://user-images.githubusercontent.com/49693862/113507703-5504f580-9576-11eb-85a2-9968c47485ce.png)
+
+
 - (b) Solusi untuk poin ini adalah sebagai berikut:
 > Memanggil script dari soal 3a dengan argumen extra berupa tanggal hari ini. Argumen extra berupa tanggal akan membuat directory baru di script soal 3a sesuai dengan tanggal yang dimasukkan.
 ```bash
